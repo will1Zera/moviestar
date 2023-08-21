@@ -112,6 +112,45 @@
     border-color: #badbcc;
 }
 
+/* Login - Cadastro */
+#auth-row{
+    justify-content: space-evenly;
+}
+
+#login-container h2,
+#register-container h2{
+    text-align: center;
+    border-bottom: 2px solid #f5c518;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#login-container form,
+#register-container form{
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.card-btn{
+    color: #000;
+    background-color: #f5c518;
+    border: 2px solid #f5c518;
+    width: 100%;
+    transition: .5s;
+    margin-top: 20px;
+}
+
+.card-btn:hover{
+    color: #f5c518;
+    background-color: transparent;
+    border-color: #f5c518;
+}
+
+.form-group label{
+    padding: 10px 0px 5px 0px;
+}
+
 /* Footer */
 
 #footer{
