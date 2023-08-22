@@ -1,8 +1,19 @@
 <?php 
     require_once("globals.php"); // Importa as variais para uso neste arquivo
     require_once("db.php"); // Importa a conexão com o banco de dados
+    require_once("models/Message.php"); // Importa a classe de mensagens
+    require_once("dao/UserDAO.php"); // Importa a classe de DAO do usuário
 
-    $flassMessage = []; // Array para mensagens do sistema
+    $message = new Message($BASE_URL);
+
+    $flassMessage = $message->getMessage(); // Pega a mensagem
+    // Exclui a div da mensagem
+    if(!empty($flassMessage["msg"])){
+        $message->clearMessage();
+    }
+
+    $userDao = new UserDao($conn, $BASE_URL);
+    $userData = $userDao->verifyToken(false);
 ?>
 
 <!DOCTYPE html>
@@ -43,9 +54,29 @@
             <!-------- BUG --------->
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a>
-                    </li>
+                    <!-- Muda o header dependendo se o usuário está logado ou não -->
+                    <?php if($userData): ?>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>newmovie.php" class="nav-link">
+                                <i class="far fa-plus-square"></i> Adicionar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>dashboard.php" class="nav-link">Filmes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>editprofile.php" class="nav-link bold">
+                                <?= $userData->name ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>logout.php" class="nav-link">Sair</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Entrar / Cadastrar</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </nav>

@@ -56,8 +56,20 @@
 
         }
 
+        // Função que verifica se o usuário está logado ou não
         public function verifyToken($protected = false){
+            if(!empty($_SESSION["token"])){
+                $token = $_SESSION["token"];
+                $user = $this->findByToken($token);
 
+                if($user){
+                   return $user; 
+                } else if($protected){ // Redireciona usuário não autenticado
+                    $this->message->setMessage("Sem permissão de acesso.", "error", "index.php");
+                }
+            } else if($protected){ // Redireciona usuário não autenticado
+                $this->message->setMessage("Sem permissão de acesso.", "error", "index.php");
+            }
         }
 
         // Função que seta o token na sessão e redireciona o usuário
@@ -73,8 +85,34 @@
 
         }
 
+        // Função que faz toda a validação do token do usuário
         public function findByToken($token){
 
+            if($token != ""){
+                $stmt = $this->conn->prepare("SELECT * FROM users WHERE token = :token");
+                $stmt->bindParam(":token", $token);
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0){
+
+                    $data = $stmt->fetch();
+                    $user = $this->buildUser($data);
+
+                    return $user;
+                } else{
+                    return false;
+                }
+
+            } else{
+                return false;
+            }
+        }
+
+        // Função que remove o token e redireciona para fazer o logout
+        public function destroyToken(){
+            $_SESSION["token"] = "";
+
+            $this->message->setMessage("Logout realizado com sucesso.", "success", "index.php");
         }
 
         // Função que faz toda a validação do email do usuário
@@ -98,7 +136,6 @@
             } else{
                 return false;
             }
-
         }  
 
         public function findById($id){
