@@ -9,6 +9,16 @@
         public $image;
         public $bio;
         public $token;
+
+        // Função que gera o token randomicamente
+        public function generateToken(){
+            return bin2hex(random_bytes(50));
+        }
+
+        // Função que gera o hash de uma senha
+        public function generatePassword($password){
+            return password_hash($password, PASSWORD_DEFAULT);
+        }
     }
 
     interface UserDAOInterface{
