@@ -58,7 +58,17 @@
 
 
     } else if ($type === "login"){ // Realiza o login
+       
+        $email = filter_input(INPUT_POST, "email");
+        $password = filter_input(INPUT_POST, "password");
 
+        if($userDao->authenticateUser($email, $password)){
+            $message->setMessage("Usuário logado com sucesso.", "success", "editprofile.php");
+        } else{ // Mensagem de erro caso e-mail e/ou senha estiverem erradas
+            $message->setMessage("E-mail e/ou senha incorretos.", "error", "back");
+        }
+    } else{ // Mensagem de erro geral
+        $message->setMessage("Ocorreu um erro no sistema.", "error", "index.php");
     }
 
 

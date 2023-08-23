@@ -52,8 +52,30 @@
             }
         }
 
-        public function update(User $user){
+        // Função que atualiza o usuário no banco de dados
+        public function update(User $user, $redirect = true){
+            $stmt = $this->conn->prepare("UPDATE users SET
+                name = :name,
+                lastname = :lastname,
+                email = :email,
+                image = :image,
+                bio = :bio,
+                token = :token
+                WHERE id = :id
+            ");
 
+            $stmt->bindParam(":name", $user->name);
+            $stmt->bindParam(":lastname", $user->lastname);
+            $stmt->bindParam(":email", $user->email);
+            $stmt->bindParam(":image", $user->image);
+            $stmt->bindParam(":bio", $user->bio);
+            $stmt->bindParam(":token", $user->token);
+            $stmt->bindParam(":id", $user->id);
+            $stmt->execute();
+
+            if($redirect){
+                $this->message->setMessage("Dados atualizados com sucesso.", "success", "editprofile.php");
+            }
         }
 
         // Função que verifica se o usuário está logado ou não
@@ -81,8 +103,28 @@
             }
         }  
 
+        // Função que autentica o email e a senha do usuário no login
         public function authenticateUser($email, $password){
+            // Verifica o email corretamente
+            $user = $this->findByEmail($email);
 
+            if($user){
+                // Verifica a senha corretamente
+                if(password_verify($password, $user->password)){
+                    // Manipula um token para login
+                   $token = $user->generateToken();
+                   $this->setTokenToSession($token, false); 
+                   // Atualiza o token do usuário
+                   $user->token = $token;
+                   $this->update($user, false);
+
+                   return true;
+                } else{
+                    return false;
+                }
+            } else{
+                return false;
+            }
         }
 
         // Função que faz toda a validação do token do usuário
