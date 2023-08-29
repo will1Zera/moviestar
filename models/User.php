@@ -10,6 +10,16 @@
         public $bio;
         public $token;
 
+        // Função que pega o nome completo do usuário
+        public function getFullName($user){
+            return $user->name . " " . $user->lastname;
+        }
+
+        // Função que gera um nome para a imagem
+        public function imageGenerateName(){
+            return bin2hex(random_bytes(60)) . ".jpg";
+        }
+
         // Função que gera o token randomicamente
         public function generateToken(){
             return bin2hex(random_bytes(50));

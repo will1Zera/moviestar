@@ -151,6 +151,38 @@
     padding: 10px 0px 5px 0px;
 }
 
+/* Edição de usuário */
+
+#profile-image-container{
+    width: 150px;
+    height: 150px;
+    border: 6px solid #F5C518;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+    margin: 15px auto;
+}
+
+.page-description{
+    color: #999;
+}
+
+#bio{
+    max-width: 400px;
+}
+
+.disabled{
+    background-color: #CCC;
+}
+
+#change-password-container{
+    margin-top: 30px;
+}
+
+.edit-profile-page .card-btn{
+    width: auto;
+}
+
 /* Footer */
 
 #footer{
