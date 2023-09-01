@@ -72,11 +72,25 @@
         } 
 
         public function getMoviesByUserId($id){
+            $movies = [];
+            $stmt = $this->conn->prepare("SELECT * FROM movies WHERE users_id = :users_id");
+            $stmt->bindParam(":users_id", $id);
+            $stmt->execute();
 
+            if($stmt->rowCount() > 0){
+                $moviesArray = $stmt->fetchAll();
+
+                foreach($moviesArray as $movie){
+                    $movies[] = $this->buildMovie($movie);
+                }
+            }
+
+            return $movies;
         } 
 
+        // Função que procura um filme pelo id dele
         public function findById($id){
-
+            
         }
 
         public function findByTitle($title){
