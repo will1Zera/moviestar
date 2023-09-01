@@ -135,7 +135,30 @@
 
         // Função que atualiza o filme no banco de dados
         public function update(Movie $movie){
-            
+            // Prepara a query de SQL do banco de dados
+            $stmt = $this->conn->prepare("UPDATE movies SET
+                title = :title, 
+                description = :description, 
+                image = :image, 
+                trailer = :trailer, 
+                category = :category, 
+                length = :length
+                WHERE id = :id
+                ");
+
+            // Brinda os parametros da query values com os dados
+            $stmt->bindParam(":title", $movie->title);
+            $stmt->bindParam(":description", $movie->description);
+            $stmt->bindParam(":image", $movie->image);
+            $stmt->bindParam(":trailer", $movie->trailer);
+            $stmt->bindParam(":category", $movie->category);
+            $stmt->bindParam(":length", $movie->length);
+            $stmt->bindParam(":id", $movie->id);
+            // Executa a query
+            $stmt->execute();
+
+            // Exibe mensagem de sucesso e redireciona para a dashboard
+            $this->message->setMessage("Filme atualizado com sucesso.", "success", "dashboard.php");
         }
 
         // Função que deleta o filme no banco de dados
