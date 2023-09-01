@@ -138,9 +138,19 @@
             
         }
 
+        // Função que deleta o filme no banco de dados
         public function destroy($id){
+            // Prepara a query de SQL do banco de dados
+            $stmt = $this->conn->prepare("DELETE FROM movies WHERE id = :id");
 
+            // Brinda os parametros da query values com os dados
+            $stmt->bindParam(":id", $id);
+
+            // Executa a query
+            $stmt->execute();
+
+            // Exibe mensagem de sucesso e redireciona para a dashboard
+            $this->message->setMessage("Filme removido com sucesso.", "success", "dashboard.php");
         } 
     }
-
 ?>

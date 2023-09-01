@@ -83,6 +83,27 @@
             $message->setMessage("Preencha pelo menos o título, categoria e descrição.", "error", "back");
         }
 
+    } elseif($type === "delete"){
+
+        // Recebe e procura o id do filme
+        $id = filter_input(INPUT_POST, "id");
+        $movie = $movieDao->findById($id);
+
+        if($movie){
+            // Verifica se o filme é do usuário
+            if($movie->users_id === $userData->id){
+                
+                $movieDao->destroy($movie->id);
+            } else{
+
+                $message->setMessage("Ocorreu um erro no sistema.", "error", "index.php");
+            }
+
+        } else{
+
+            $message->setMessage("Ocorreu um erro no sistema.", "error", "index.php");
+        }
+
     } else{
 
         $message->setMessage("Ocorreu um erro no sistema.", "error", "index.php");
