@@ -111,7 +111,23 @@
             }
         }
 
+        // Procura o filme pelo seu titulo
         public function findByTitle($title){
+            $movies = [];
+            $stmt = $this->conn->prepare("SELECT * FROM movies WHERE title LIKE :title");
+            // Procura o filme que tiver a palavra no seu title (Usa um método diferente)
+            $stmt->bindValue(":title", '%'.$title.'%');
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0){
+                $moviesArray = $stmt->fetchAll();
+
+                foreach($moviesArray as $movie){
+                    $movies[] = $this->buildMovie($movie);
+                }
+            }
+
+            return $movies;
 
         }
 

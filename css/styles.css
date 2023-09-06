@@ -469,6 +469,18 @@
     color: #999;
 }
 
+/* Pesquisa */
+
+#search-title{
+    font-size: 40px;
+}
+
+#search-result,
+.back-link{
+    color: #F5C518;
+}
+
+
 /* Footer */
 
 #footer{
