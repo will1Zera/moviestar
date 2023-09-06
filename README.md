@@ -7,7 +7,7 @@
   MovieStar é uma aplicação onde o usuário se registra e pode adicionar seus filmes e avaliar os filmes dos outros, adicionando comentários a eles.
 </p>
 <p align="center">
-  <img src="https://github.com/will1Zera/moviestar/blob/master/img/moviestar.gif?raw=true" align="center" style="border-radius: 10px" />
+  <img src="https://github.com/will1Zera/moviestar/blob/main/img/moviestar.gif?raw=true" align="center" style="border-radius: 10px" />
 </p>
 
 ## Tecnologias 👨‍💻 
@@ -25,7 +25,7 @@ MovieStar é uma aplicação que permite o registro de novos usuários e o login
 
 
 ### Objetivo
-Praticar conceitos aprendidos no projeto de extensão da UCPel. Entre eles:
+Praticar conceitos aprendidos no curso de PHP da Udemy. Entre eles:
 
 - Programação orientada a objetos em PHP
 - Utilização de classes DAO para dividir as responsabilidades
