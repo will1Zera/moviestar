@@ -6,6 +6,7 @@
         public $review;
         public $users_id;
         public $movies_id;
+        public $user;
 
         // Função que pega o nome completo do usuário
         public function getFullName($user){
@@ -33,7 +34,7 @@
         public function create(Review $review);   
         public function getMoviesReview($id);
         public function getRatings($id);
-        public function hasAlreadyReviewed($id);
+        public function hasAlreadyReviewed($id, $userId);
     }
 
 ?>
