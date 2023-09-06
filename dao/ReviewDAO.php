@@ -51,6 +51,7 @@
             $this->message->setMessage("Avaliação adicionada com sucesso.", "success", "index.php");
         } 
 
+        // Função que pega as reviews do filme
         public function getMoviesReview($id){
             $reviews = [];
             $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE movies_id = :movies_id");
@@ -78,10 +79,34 @@
             return $reviews;
         }
 
+        // Função que pega as notas dos filmes e calcula sua média para exibir
         public function getRatings($id){
+            $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE movies_id = :movies_id");
+            $stmt->bindParam(":movies_id", $id);
+            $stmt->execute();
 
+            // Significa que possui alguma review
+            if($stmt->rowCount() > 0){
+                
+                $rating = 0;
+
+                $reviews = $stmt->fetchAll();
+
+                foreach($reviews as $review){
+                    $rating += $review["rating"];
+                }
+
+                $rating = $rating / count($reviews);
+
+            } else{
+                
+                $rating = "Não avaliado";
+            }
+
+            return $rating;
         }
 
+        // Função que verifica se o usuário já fez review ou não
         public function hasAlreadyReviewed($id, $userId){
             $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE movies_id = :movies_id AND users_id = :users_id");
             $stmt->bindParam(":movies_id", $id);

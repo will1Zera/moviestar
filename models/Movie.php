@@ -10,6 +10,7 @@
         public $category;
         public $length;
         public $users_id;
+        public $rating;
 
         // Função que gera um nome para a imagem
         public function imageGenerateName(){
